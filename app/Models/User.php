@@ -24,7 +24,8 @@ class User extends Authenticatable
         'role',
         'alamat',
         'email',
-        
+        'password',
+
     ];
 
 
@@ -33,13 +34,13 @@ class User extends Authenticatable
 
     public function pasien(): HasMany
     {
-        return $this->hasMany(periksa::class,'id_pasien');
+        return $this->hasMany(periksa::class, 'id_pasien');
     }
-    
+
     //relasi ke periksa sebagai dokter
     public function dokter(): HasMany
     {
-        return $this->hasMany(periksa::class,'id_dokter');
+        return $this->hasMany(periksa::class, 'id_dokter');
     }
 
     /**
