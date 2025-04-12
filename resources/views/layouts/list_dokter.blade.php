@@ -11,7 +11,9 @@
     <!-- Font Awesome -->
 
     <!-- DataTables -->
-    
+    <link rel="stylesheet" href="{{url('/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{url('/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{url('/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     @include('layouts.lib.ext_css')
     <script data-cfasync="false" nonce="b7bd6bdc-d611-4c5a-96dc-1ff5598885c7">
