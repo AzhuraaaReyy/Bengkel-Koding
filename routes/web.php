@@ -11,6 +11,3 @@ Route::get('/dokter', function () {
 Route::get('/obat', function () {
     return view('layouts.list_obat');
 });
-Route::get('/pemeriksaan', function () {
-    return view('layouts.list_obat');
-});
