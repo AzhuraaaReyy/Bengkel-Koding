@@ -25,6 +25,9 @@ class User extends Authenticatable
         'alamat',
         'email',
         'password',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
 
 
     ];

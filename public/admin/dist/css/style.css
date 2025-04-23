@@ -1,0 +1,24 @@
+.forget-password {
+    color: black;
+    text-decoration: underline;
+    font-weight:bold;
+    font-style:italic;
+}
+
+.forget-password:hover {
+    color: blue;
+    transition:0.3s;
+    text-decoration: underline;
+}
+
+.register {
+    color: black;
+    text-decoration: underline;
+    font-weight:bold;
+    
+}
+.register:hover {
+    color: blue;
+    transition:0.3s;
+    text-decoration: underline;
+}

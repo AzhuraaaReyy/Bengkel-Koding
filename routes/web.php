@@ -5,10 +5,15 @@ use App\Http\Controllers\ObatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AuthSocialiteController;
 
 Route::get('/', function () {
     return view('layouts.login');
 });
+Route::get('/recoverypassword', function () {
+    return view('layouts.recovery_password');
+});
+
 
 
 Route::get('/login', [AuthController::class, 'form'])->name('login');
@@ -29,3 +34,15 @@ Route::middleware(['auth', 'role:dokter'])->group(function () {
 Route::middleware(['auth', 'role:pasien'])->group(function () {
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
 });
+
+
+Route::get(
+    '/auth/redirect',
+    [AuthSocialiteController::class, 'redirect']
+
+);
+
+Route::get(
+    '/auth/{google}/callback',
+    [AuthSocialiteController::class, 'callback']
+);
