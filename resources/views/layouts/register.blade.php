@@ -106,15 +106,15 @@
 
                 </form>
 
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1">
+                    <span class="px-2 text-muted">OR</span>
+                    <hr class="flex-grow-1">
+                </div>
                 <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i>
-                        Sign up using Facebook
-                    </a>
-                    <a href="#" class="btn btn-block btn-danger">
+                    <a href="/auth/redirect" class="btn btn-block btn-danger">
                         <i class="fab fa-google-plus mr-2"></i>
-                        Sign up using Google+
+                        Sign Up using Google+
                     </a>
                 </div>
                 <span style="color:gray;">Already have an acount?</span>
