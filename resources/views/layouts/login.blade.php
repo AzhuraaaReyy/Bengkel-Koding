@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="text-right mb-3 ">
-            <p class="mb-1 "><a href="/recoverypassword" class="forget-password">forgot password?</a></p>
+            <p class="mb-1 "><a href="/email" class="forget-password">forgot password?</a></p>
 
           </div>
           <div class="row">

@@ -10,68 +10,51 @@
 </head>
 
 <body class="hold-transition login-page">
+
+
+
     <div class="login-box">
         <div class="login-logo">
             <a href="../../index2.html"><b>Admin</b>LTE</a>
         </div>
-
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
-                @if ($errors->any())
+
+                @if($errors->any())
                 <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
                         @endforeach
                     </ul>
                 </div>
                 @endif
+                @if(session()-> has('status'))
+                <div class="alert alert-success ">
+                    {{session()->get('status')}}
+                </div>
+                @endif
 
-                <form action="{{ route('password.update') }}" method="POST">
+                <form action="{{ route('password.email') }}" method="post">
+
                     @csrf
-
-                    {{-- Token hidden dari route parameter --}}
-                    <input type="hidden" name="token" value="{{ $token }}">
-
                     <div class="input-group mb-3">
-                        <input type="hidden" name="email" class="form-control"
-                            value="{{ old('email', $email ?? '') }}"
-                            placeholder="Email" required autofocus>
-
-                    </div>
-
-
-
-                    {{-- Password baru --}}
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password baru" required>
+                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email" required autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
-
-                    {{-- Konfirmasi password --}}
-                    <div class="input-group mb-3">
-                        <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi Password" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Tombol Submit --}}
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                            <button type="submit" class="btn btn-primary btn-block">Request Password Reset</button>
                         </div>
+                        <!-- /.col -->
                     </div>
                 </form>
-
 
 
             </div>
