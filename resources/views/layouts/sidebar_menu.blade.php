@@ -30,9 +30,18 @@
                 <span class="badge badge-info right">6</span>
             </p>
         </a>
-        @elseif (Auth::user()->role == 'pasien')
     <li class="nav-item">
         <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+                Profile
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+    </li>
+    @elseif (Auth::user()->role == 'pasien')
+    <li class="nav-item">
+        <a href="/dokter" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
                 Pemeriksaan
@@ -65,6 +74,15 @@
                 </a>
             </li>
         </ul>
+    </li>
+    <li class="nav-item">
+        <a href="/profile" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+                Profile
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
     </li>
     @endif
     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
