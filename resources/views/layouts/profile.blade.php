@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Profile Page</title>
 
     <!-- Bootstrap CSS -->
@@ -74,7 +75,7 @@
                 <!-- Sidebar user -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ url('/admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                        <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('images/default.jpg') }}" class=" img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::user()->nama }}</a>
@@ -115,19 +116,26 @@
                 <div class="container-fluid">
                     <!-- Profile Section -->
                     <div class="card mb-4">
-                        <div class="cover-photo position-relative">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="profile-pic" alt="Profile Picture">
+                        <div class="cover-photo position-relative" style="background-image: url('{{ Auth::user()->cover_photo ? asset('storage/' . Auth::user()->cover_photo) : asset('images/default.jpg') }}'); ">
+
+                            <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('images/default.jpg') }}" class="profile-pic" alt="Profile Picture">
+
+
                             <div class="position-absolute start-50 translate-middle-x text-center" style="top: 55%;">
                                 <h4 class="mb-0 text-white">{{ Auth::user()->nama }}</h4>
                                 <small class="text-white-50">UI/UX Designer</small>
                                 <div class="mt-3">
-                                    <button class="btn btn-primary btn-sm me-2">Edit Profile</button>
-                                    <button class="btn btn-outline-light btn-sm">Edit Cover Photo</button>
+                                    <button type="button" class="btn btn-primary btn-sm me-2" style="padding: 5px;" data-bs-toggle="modal" data-bs-target="#edit">
+                                        Edit Profile
+                                    </button>
+                                    <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editCoverPhotoModal">
+                                        Edit Cover Photo
+                                    </button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
+
 
 
                     <!-- About Section -->
@@ -194,6 +202,108 @@
             </section>
             <!-- /.content -->
         </div>
+
+        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true" style="margin-top:60px; margin-left: 60px">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group row mb-3">
+                                <label for="inputNamalengkap" class="col-sm-2 col-form-label">Nama Lengkap</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="nama" value=" {{ Auth::user()->nama }}" class="form-control" id="inputNamalengkap" placeholder="Nama Lengkap">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="email" value=" {{ Auth::user()->email }}" class="form-control" id="inputEmail" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputpassword" class="col-sm-2 col-form-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="password" value="**********" class="form-control" id="inputpassword" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputNo_Hp" class="col-sm-2 col-form-label">No_Hp</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="no_hp" value=" {{ Auth::user()->no_hp }}" class="form-control" id="inputNo_Hp" placeholder="No_hp">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputRole" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="role" value=" {{ Auth::user()->role }}" class="form-control" id="inputRole" placeholder="Role" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputphoto" class="col-sm-2 col-form-label">FotoProfile</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" name="photo" type="file" id="inputphoto" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputAlamat" class="col-sm-2 col-form-label">Alamat</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="alamat" id="inputAlamat" placeholder=" {{ Auth::user()->alamat }}"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <div class="offset-sm-2 col-sm-10">
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editCoverPhotoModal" tabindex="-1" aria-labelledby="editCoverPhotoModalLabel" aria-hidden="true" style=" margin-left: 60px">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCoverPhotoModalLabel">Change Cover Photo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="coverPhotoForm">
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="coverPhotoInput" accept="image/*">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="changeCoverPhoto()">Save</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
         <!-- /.content-wrapper -->
         @include('layouts.footer')
 
@@ -205,6 +315,43 @@
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function changeCoverPhoto() {
+            const input = document.getElementById('coverPhotoInput');
+            const file = input.files[0];
+
+            if (file) {
+                let formData = new FormData();
+                formData.append('cover_photo', file);
+
+                fetch('/upload-cover-photo', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Memperbarui gambar cover foto
+                            const coverPhotoElement = document.querySelector('.cover-photo');
+                            coverPhotoElement.style.backgroundImage = `url('${data.cover_photo_url}')`;
+
+                            // Menutup modal
+                            var modal = bootstrap.Modal.getInstance(document.getElementById('editCoverPhotoModal'));
+                            modal.hide();
+                        } else {
+                            alert('Upload gagal!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+    </script>
+
 </body>
 
 </html>

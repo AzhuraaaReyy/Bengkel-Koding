@@ -7,6 +7,7 @@ use App\Http\Controllers\DokterController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthSocialiteController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('layouts.login');
@@ -16,6 +17,9 @@ Route::get('/email', function () {
 });
 Route::get('/profile', function () {
     return view('layouts.profile');
+});
+Route::get('/editprofile', function () {
+    return view('layouts.editProfile');
 });
 
 
@@ -59,3 +63,9 @@ Route::get('/forgot-password', function () {
 Route::post('/forgot-password', [ResetPasswordController::class, 'verifyEmail'])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'UpdatePassword'])->middleware('guest')->name('password.update');
+
+#edit profile
+Route::put('/updateProfile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/upload-cover-photo', [ProfileController::class, 'uploadCoverPhoto'])->name('upload.cover.photo');
+});

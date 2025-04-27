@@ -31,7 +31,9 @@ class AuthSocialiteController extends Controller
                 'google_refresh_token' => $SosialUser->refreshToken,
                 'no_hp' => '-',
                 'role' => 'pasien',
-                'alamat' => '-'
+                'alamat' => '-',
+                'photo' => '-',
+                'cover_photo' => '-',
             ]);
 
             Auth::login($user);

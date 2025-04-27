@@ -4,7 +4,7 @@
     @if (Auth::user()->role == 'dokter')
 
     <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="/obat" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
                 Dokter
@@ -13,7 +13,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="../widgets.html" class="nav-link">
+        <a href="/obat" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
                 Obat
@@ -31,8 +31,8 @@
             </p>
         </a>
     <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+        <a href="/profile" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
             <p>
                 Profile
                 <i class="right fas fa-angle-left"></i>
