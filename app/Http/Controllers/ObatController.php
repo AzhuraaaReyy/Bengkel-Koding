@@ -10,6 +10,11 @@ class ObatController extends Controller
     public function index()
     {
         $obats = Obat::all();
+        return view('layouts.dashboard', compact('obats'));
+    }
+    public function obat()
+    {
+        $obats = Obat::all();
         return view('layouts.list_obat', compact('obats'));
     }
 

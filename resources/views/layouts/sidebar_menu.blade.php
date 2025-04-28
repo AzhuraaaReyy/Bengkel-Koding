@@ -5,6 +5,15 @@
 
     <li class="nav-item">
         <a href="/obat" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="/list-dokter" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
                 Dokter
@@ -13,7 +22,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="/obat" class="nav-link">
+        <a href="/list-obat" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
                 Obat
@@ -44,36 +53,19 @@
         <a href="/dokter" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="/list-dokter" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
                 Pemeriksaan
                 <i class="right fas fa-angle-left"></i>
             </p>
         </a>
-        <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>ChartJS</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../charts/flot.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Flot</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../charts/inline.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Inline</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../charts/uplot.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>uPlot</p>
-                </a>
-            </li>
-        </ul>
     </li>
     <li class="nav-item">
         <a href="/profile" class="nav-link">

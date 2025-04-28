@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthSocialiteController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('layouts.login');
@@ -21,6 +22,10 @@ Route::get('/profile', function () {
 Route::get('/editprofile', function () {
     return view('layouts.editProfile');
 });
+Route::get('/list-dokter', function () {
+    $dokters = User::where('role', 'dokter')->get();
+    return view('layouts.list_dokter', compact('dokters'));
+});
 
 
 
@@ -32,6 +37,7 @@ Route::get('/register', [RegisterController::class, 'formRegister'])->name('daft
 Route::post('/register', [RegisterController::class, 'register']);
 Route::middleware(['auth', 'role:dokter'])->group(function () {
     Route::get('/obat', [ObatController::class, 'index'])->name('obat.index');
+    Route::get('/list-obat', [ObatController::class, 'obat'])->name('obat.index');
     Route::get('/obat/{id}/edit', [ObatController::class, 'edit'])->name('obat.edit');
     Route::put('/obat/{id}', [ObatController::class, 'update'])->name('obat.update');
     Route::post('/obat', [ObatController::class, 'store'])->name('obat.store');

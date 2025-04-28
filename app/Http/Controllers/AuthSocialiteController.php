@@ -32,8 +32,8 @@ class AuthSocialiteController extends Controller
                 'no_hp' => '-',
                 'role' => 'pasien',
                 'alamat' => '-',
-                'photo' => '-',
-                'cover_photo' => '-',
+                'photo' => '',
+                'cover_photo' => '',
             ]);
 
             Auth::login($user);

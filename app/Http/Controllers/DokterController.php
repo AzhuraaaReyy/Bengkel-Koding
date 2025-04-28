@@ -11,6 +11,6 @@ class DokterController extends Controller
     public function index()
     {
         $dokters = User::where('role', 'dokter')->get();
-        return view('layouts.list_dokter', compact('dokters'));
+        return view('layouts.dashboard', compact('dokters'));
     }
 }
