@@ -13,4 +13,5 @@ class DokterController extends Controller
         $dokters = User::where('role', 'dokter')->get();
         return view('layouts.dashboard', compact('dokters'));
     }
+    
 }

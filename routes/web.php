@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthSocialiteController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
+use App\Http\Controllers\PasienController;
 
 Route::get('/', function () {
     return view('layouts.login');
@@ -16,6 +17,7 @@ Route::get('/', function () {
 Route::get('/email', function () {
     return view('layouts.emailverification');
 });
+
 Route::get('/profile', function () {
     return view('layouts.profile');
 });
@@ -43,6 +45,9 @@ Route::middleware(['auth', 'role:dokter'])->group(function () {
     Route::post('/obat', [ObatController::class, 'store'])->name('obat.store');
     Route::get('/obat/create', [ObatController::class, 'create'])->name('obat.create');
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
+    Route::get('/periksa', [PasienController::class, 'pasien'])->name('pasien.index');
+    Route::get('/edit_periksa/{id}/edit', [PasienController::class, 'edit'])->name('pasien.index');
+    Route::put('/edit_periksa/{id}', [PasienController::class, 'update'])->name('pasien.update');
     Route::delete('/obat/{id}', [ObatController::class, 'destroy'])->name('obat.destroy');
 });
 

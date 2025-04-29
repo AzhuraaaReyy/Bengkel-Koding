@@ -13,10 +13,10 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="/list-dokter" class="nav-link">
+        <a href="/periksa" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
-                Dokter
+                Pemeriksaan
                 <i class="right fas fa-angle-left"></i>
             </p>
         </a>
@@ -30,15 +30,7 @@
             </p>
         </a>
     </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-                Pemeriksaan
-                <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
-            </p>
-        </a>
+
     <li class="nav-item">
         <a href="/profile" class="nav-link">
             <i class="nav-icon fas fa-user"></i>
