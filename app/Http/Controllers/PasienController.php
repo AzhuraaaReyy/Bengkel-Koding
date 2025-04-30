@@ -11,21 +11,52 @@ class PasienController extends Controller
 {
     public function pasien()
     {
-        $pasiens = User::all();
-        return view('layouts.pemeriksaan', compact('pasiens'));
+        // Ambil dokter yang sedang login
+        $dokter = auth()->user(); // Mendapatkan data user yang sedang login
+
+        // Pastikan yang login adalah dokter
+        if ($dokter->role !== 'dokter') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses sebagai dokter.');
+        }
+
+        // Ambil semua pemeriksaan yang dilakukan oleh dokter yang sedang login
+        $periksas = Periksa::with(['pasien', 'dokter'])
+            ->where('id_dokter', $dokter->id)  // Mengambil pemeriksaan berdasarkan id dokter yang login
+            ->get();
+
+        return view('layouts.pemeriksaan', compact('periksas'));
     }
+
+
+
+
 
     public function edit($id)
     {
+        // Pastikan ambil data periksa beserta relasinya
         $periksa = Periksa::with(['pasien', 'dokter', 'detailPeriksa.obat'])->findOrFail($id);
         $obats = Obat::all();
 
-        // Hitung total harga awal
-        $totalHargaObat = $periksa->detailPeriksa->sum(function ($detail) {
-            return $detail->obat->harga * $detail->jumlah;
-        });
+        // Biaya pemeriksaan
+        $biayaPeriksa = $periksa->biaya_periksa ?? 0;
 
-        $totalHarga = $totalHargaObat + $periksa->biaya_periksa;
+        // Hitung total harga obat
+        $totalHargaObat = 0;
+        foreach ($periksa->detailPeriksa as $detail) {
+            if ($detail->obat) {
+                $totalHargaObat += $detail->obat->harga;
+            }
+        }
+
+        // Total harga = biaya periksa + total harga obat
+        $totalHarga = $biayaPeriksa + $totalHargaObat;
+        // Siapkan array ID obat yang dipilih untuk pre-select di form
+        $selectedObatIds = [];
+        foreach ($periksa->detailPeriksa as $detail) {
+            if ($detail->obat) {
+                $selectedObatIds[] = $detail->obat->id;
+            }
+        }
 
         return view('layouts.edit_periksa', compact('periksa', 'obats', 'totalHarga'));
     }
@@ -35,14 +66,16 @@ class PasienController extends Controller
             'tanggal' => 'required|date',
             'catatan' => 'required|string',
             'obat_ids' => 'required|array',
-            'total_harga' => 'required|numeric',
+            'totalHarga' => 'required|numeric',
         ]);
 
         $periksa = Periksa::findOrFail($id);
 
         $periksa->tgl_periksa = $request->tanggal;
         $periksa->catatan = $request->catatan;
-        $periksa->biaya_periksa = $request->total_harga; // Simpan total harga di kolom ini (atau kolom lain sesuai struktur Anda)
+        $periksa->biaya_periksa = $request->totalHarga; // Simpan total harga di kolom ini (atau kolom lain sesuai struktur Anda)
+        $periksa->status = 'Diperiksa';
+
 
         $periksa->save();
 

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignID('id_pasien')->constrained('users', 'id');
             $table->foreignID('id_dokter')->constrained('users', 'id');
             $table->datetime('tgl_periksa')->nullable();
-            $table->text('catatan');
-            $table->float('biaya_periksa');
+            $table->text('catatan')->nullable();
+            $table->float('totalHarga')->nullable();
+            $table->float('biaya_periksa')->nullable();
+            $table->string('status')->default('Menunggu'); // default bisa Menunggu
             $table->timestamps();
         });
     }

@@ -7,7 +7,8 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\periksa;
+use Carbon\Carbon;
 class AuthSocialiteController extends Controller
 {
     public function redirect()
@@ -34,7 +35,16 @@ class AuthSocialiteController extends Controller
                 'alamat' => '-',
                 'photo' => '',
                 'cover_photo' => '',
+
             ]);
+            $user = periksa::updateOrCreate([
+                'id_pasien' => $user->id,
+                'id_dokter' => null, // atau isi sesuai kebutuhan
+                'tgl_periksa' => Carbon::now()->toDateString(),
+                'catatan' => '-',
+                'biaya_periksa' => 0,
+            ]);
+
 
             Auth::login($user);
 

@@ -25,16 +25,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($pasiens as $pasien)
+            @foreach ($periksas as $periksa)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $pasien->nama}}</td>
+                <td>{{ $periksa->pasien->nama ?? '-' }}</td> {{-- Nama pasien --}}
                 <td>
-                    <a href="{{ route('pasien.index', $pasien->id) }}" class="btn btn-primary btn-sm">Periksa</a>
-
+                    <a href="{{ route('pasien.edit', $periksa->id) }}" class="btn btn-primary btn-sm">
+                        {{ $periksa->status == 'Diperiksa' ? 'Edit' : 'Periksa' }}
+                    </a>
                 </td>
             </tr>
             @endforeach
         </tbody>
+
     </table>
 </div>

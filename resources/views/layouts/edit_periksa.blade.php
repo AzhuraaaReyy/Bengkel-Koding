@@ -44,25 +44,27 @@
                             <input type="text" class="form-control" id="catatan" name="catatan" value="" required>
                         </div>
                         <div class="form-group">
-                            <label for="obat">Obat</label>
-                            <select name="obat_ids[]" id="obat" class="form-control" required>
-                                <!-- Placeholder -->
-                                <option value="" disabled selected>Pilihan Obat</option>
-
-                                <!-- Daftar obat -->
-                                @foreach ($obats as $obat)
-                                <option value="{{ $obat->id }}" data-harga="{{ $obat->harga }}">
+                            <label for="obat">Obat</label><br>
+                            @foreach ($obats as $obat)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="obat_ids[]" value="{{ $obat->id }}"
+                                    data-harga="{{ $obat->harga }}"
+                                    @if(isset($selectedObatIds) && in_array($obat->id, $selectedObatIds)) checked @endif>
+                                <label class="form-check-label" for="obat{{ $obat->id }}">
                                     {{ $obat->nama_obat }} - {{ $obat->kemasan }} - Rp{{ number_format($obat->harga, 0, ',', '.') }}
-                                </option>
-                                @endforeach
-                            </select>
+                                </label>
+                            </div>
+                            @endforeach
                             <small class="form-text text-muted">Pilih obat yang akan diberikan kepada pasien.</small>
                         </div>
-                        <!-- Simpan biaya periksa di hidden field -->
-                        <input type="hidden" id="biaya_periksa" value="{{ $periksa->biaya_periksa }}">
                         <div class="form-group">
-                            <label for="total_harga">Total Harga</label>
-                            <input type="number" class="form-control" id="total_harga" name="total_harga" value="{{ $totalHarga }}" required>
+                            <label for="biaya_periksa">Biaya Pemeriksaan</label>
+                            <input type="number" class="form-control" id="biaya_periksa" name="biaya_periksa" value="{{$periksa->biaya_periksa}}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="totalHarga">Total Harga</label><span>(Biaya_Pemeriksaan + Harga_Obat)</span>
+                            <input type="number" class="form-control" id="totalHarga" name="totalHarga" value="{{$totalHarga}}" readonly>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -78,20 +80,40 @@
 <!-- Script untuk hitung total harga otomatis -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const selectObat = document.getElementById('obat');
-        const totalHargaInput = document.getElementById('total_harga');
-        const biayaPeriksa = parseInt(document.getElementById('biaya_periksa').value) || 0;
+        const checkboxes = document.querySelectorAll('input[name="obat_ids[]"]');
+        const totalHargaInput = document.getElementById('totalHarga');
+        const biayaPeriksaInput = document.getElementById('biaya_periksa');
 
+        // Fungsi untuk menghitung total harga
         function hitungTotalHarga() {
+            // Selalu ambil nilai terbaru dari biaya periksa
+            const biayaPeriksa = parseInt(biayaPeriksaInput.value) || 0;
+
             let totalObat = 0;
-            Array.from(selectObat.selectedOptions).forEach(option => {
-                const harga = parseInt(option.dataset.harga);
-                if (!isNaN(harga)) totalObat += harga;
+            // Loop melalui setiap checkbox untuk menghitung harga obat yang dipilih
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const harga = parseInt(checkbox.dataset.harga);
+                    if (!isNaN(harga)) {
+                        totalObat += harga;
+                    }
+                }
             });
+
+            // Hitung dan set total harga
             totalHargaInput.value = biayaPeriksa + totalObat;
         }
 
-        selectObat.addEventListener('change', hitungTotalHarga);
+        // Dengarkan perubahan pada pilihan obat
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', hitungTotalHarga);
+        });
+
+        // Dengarkan perubahan pada biaya periksa
+        biayaPeriksaInput.addEventListener('input', hitungTotalHarga);
+
+        // Hitung total awal saat halaman dimuat
+        hitungTotalHarga();
     });
 </script>
 @endsection

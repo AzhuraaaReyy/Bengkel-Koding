@@ -21,6 +21,7 @@ Route::get('/email', function () {
 Route::get('/profile', function () {
     return view('layouts.profile');
 });
+
 Route::get('/editprofile', function () {
     return view('layouts.editProfile');
 });
@@ -46,13 +47,16 @@ Route::middleware(['auth', 'role:dokter'])->group(function () {
     Route::get('/obat/create', [ObatController::class, 'create'])->name('obat.create');
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
     Route::get('/periksa', [PasienController::class, 'pasien'])->name('pasien.index');
-    Route::get('/edit_periksa/{id}/edit', [PasienController::class, 'edit'])->name('pasien.index');
+    Route::get('/edit_periksa/{id}/edit', [PasienController::class, 'edit'])->name('pasien.edit');
     Route::put('/edit_periksa/{id}', [PasienController::class, 'update'])->name('pasien.update');
+
     Route::delete('/obat/{id}', [ObatController::class, 'destroy'])->name('obat.destroy');
 });
 
 Route::middleware(['auth', 'role:pasien'])->group(function () {
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
+    Route::get('/periksa/dokter', [DokterController::class, 'byDokter'])->name('periksa.byDokter');
+    Route::post('/periksa/dokter', [DokterController::class, 'byDokter']);
 });
 
 

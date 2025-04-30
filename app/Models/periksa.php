@@ -15,6 +15,7 @@ class periksa extends Model
         'tgl_periksa',
         'catatan',
         'biaya_periksa',
+        
     ];
 
     //menggunakan belongs to karena merupakan child atau anak,dimana id_dokter,dan id_pasien mempunyai relasi ke id users
